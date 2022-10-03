@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+
+
+
+{% block body %}
+    <div class="container">
+        <div class="'row mb-3">
+            {% if query %}
+            <div class="col-12 mb-3">
+                <p>Search for {{ query }}</p>
+                <hr>
+            </div>
+            {% else %}
+            <div class="col-12 col-md-8 mx-auto py-4">
+                <input class="form-control" type="text" placeholder="Search">
+            </div>
+
+            {% endif %}
+        </div>
+   </div>
+
+
+
+
+    <div class="container">
+        <div class="'row">
+
+        {% for product in product_list %}
+            <div class='col'>
+            {{ forloop.counter }}
+            {% include 'products/product_card.html'  %}
+
+            {% if forloop.counter|divisibleby:3 %}
+             </div> </div><div class='row'><div class='col-12'><hr/></div>
+
+            {% else %}
+             </div>
+            {% endif %}
+
+
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}

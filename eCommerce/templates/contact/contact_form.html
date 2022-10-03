@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %} Contact {% endblock %}
+{% block body %}
+<div class="text-center">
+    <h1>{{title}}</h1>
+    <h1>"Hello, we are working!"</h1>
+
+</div>
+<div class="containter">
+    <div class="row">
+        <div class="col">
+            <p>{{content}}</p>
+            <div class='col-sm-6 col-12' >
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p}}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
