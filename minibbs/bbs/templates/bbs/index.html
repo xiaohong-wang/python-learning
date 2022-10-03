@@ -1,0 +1,16 @@
+{% extends 'bbs/base.html' %}
+{% block body %}
+    {% for post in post_list %}
+        <a href="{% url 'bbs:community_detail' post.community.id %}">
+            <div class="card border-dark mb-3" style="max-width: 50rem;" >
+                <p>Community: <a href="{% url 'bbs:community_detail' post.community.id %}"> <strong>{{post.community}}  </strong> </a>   <a>---Posted by<small href="#"> {{post.author}}</small></a></p>
+              <div class="card-header"> <a href="{% url 'bbs:post_detail' post.id %}">{{post.title}}</a></div>
+              <div class="card-body text-dark" >
+                <p class="card-text"> {{post.content}}</p>
+              </div>
+            </div>
+        </a>
+
+    {% endfor %}
+
+{% endblock %}

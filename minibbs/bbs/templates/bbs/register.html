@@ -1,0 +1,12 @@
+<h3>Register</h3>
+<form method="post">
+    {% csrf_token%}
+    {% for field in form %}
+    <p>{{field.label_tag}} : {{field}}</p>
+    {% endfor %}
+    <input type="submit" name="Create User">
+    {% for message in messages %}
+        <a class="text-danger"><small>{{message}}</small></a>
+    {% endfor %}
+
+</form>

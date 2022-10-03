@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %}
+
+{% block body %}
+{% if blogger_list %}
+  <h1> All Bloggers </h1>
+  <ul>
+    {% for blogger in blogger_list %}
+    <li> <a href="{% url 'blog:blogger_detail' blogger.id %}"> {{ blogger }}</a></li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <h1> There is no bloggers. </h1>
+{% endif %}
+
+{% endblock %}

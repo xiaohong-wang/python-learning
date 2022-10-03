@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %}
+{% block body %}
+    <h1> Blogger: {{object }} </h1>
+    <h3>Bio:</h3>
+    <p> {{object.bio }}</p>
+    <h3>Blog list</h3>
+    <ul>
+        {% for blog in object.blog_set.all %}
+        <li><a href="{% url 'blog:blog_detail' blog.id %}"> {{blog.title }} ({{blog.post_date}})</a></li>
+        {% endfor %}
+
+
+    </ul>
+
+{% endblock %}

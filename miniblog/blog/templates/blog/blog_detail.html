@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+{% block body %}
+    <h1> {{object.title}}</h1>
+    <p><strong>Post Date: </strong>{{object.post_date}}</p>
+    <p><strong>Author: </strong>{{object.author}}</p>
+    <p><strong>Description:</strong></p>
+    <p> {{object.description}}</p>
+    <h4>Comments:</h4>
+    <hr>
+    {% for comment in object.comment_set.all %}
+        <p>{{comment.user.get_username}}({{comment.post_date}})- {{comment.description}}</p>
+        <hr>
+    {% endfor %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'blog:add_comment' object.id %}">Add a new comment </a>
+    {% else %}
+        <span><a href="{% url 'blog:login' %}"> Login </a>to add a new comment</span>
+    {% endif %}
+
+
+
+{% endblock %}
