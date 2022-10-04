@@ -1,1 +1,30 @@
-<h4> cart</h4>
+
+<h3>Cart</h3>
+{% if products %}
+
+<table>
+    <thead>
+        <tr>
+            <td>#</td>
+            <td><strong>Product Name</strong></td>
+            <td><strong>Product Price</strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{product.name}}</td>
+            <td>{{product.price}}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="2"></td>
+            <td><b>Total</b>{{total }}</td>
+        </tr>
+
+    </tbody>
+</table>
+{% else%}
+<p> Cart is empty</p>
+{% endif %}

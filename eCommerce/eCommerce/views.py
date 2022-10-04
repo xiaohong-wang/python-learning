@@ -9,18 +9,20 @@ def home_page(request):
     context = {'title': "Home",
                'content': 'This is HomePage'}
 
-    request.session['page_name'] = 'visited'
-    request.session['username']=request.user.username
+   # request.session['page_name'] = 'visited'
+   # request.session['username']=request.user.username
     return render(request,'home.html', context)
 
 def about_page(request: object):
     context = {'title': "about",
                'content': 'This is About'}
+    """
     if request.session.get('page_name'):
         print ('visited')
 
     if request.session.get('username'):
         print ( request.session.get('username'))
+        """
    # if request.session.test_cookie_worked():
         #print("cookie tested")
         #request.session.delete_test_cookie()

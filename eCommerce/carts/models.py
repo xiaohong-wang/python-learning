@@ -5,6 +5,27 @@ from django.conf import settings
 import datetime
 # Create your models here.
 
+class CartManager(models.Manager):
+    def new(self,user=None):
+        user_obj = None
+        if user.is_authenticated:
+            user_obj = user
+
+        return Cart.objects.create(user=user_obj)
+
+    def new_or_get(self,request):
+        cart_id = request.session.get('cart_id',None)
+        qs = Cart.objects.filter(pk=cart_id)
+        if qs.count() == 1:
+            cart_obj = qs.first()
+            if request.user.is_authenticated and cart_obj.user is None:
+                cart_obj.user = request.user
+                cart_obj.save()
+        else:
+            cart_obj = Cart.objects.new(request.user)
+            request.session['cart_id'] = cart_obj.id
+        return cart_obj
+
 
 class Cart(models.Model):
     user = models.ForeignKey(User,models.SET_NULL, blank=True, null=True)
@@ -13,33 +34,7 @@ class Cart(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     total = models.DecimalField(default=0.00, max_digits=20, decimal_places=2)
 
-    def __init__(self,request):
-        self.session = request.session
-        cart = self.session.get('cart')
-        print (cart)
-        if cart is None:
-           cart = self.session['cart'] = {}
-
-        self.cart = cart
-
-    def add(self,product,quantity=1, update_quantity=False):
-        product_id = product.id
-        if product_id not in self.cart:
-            self.cart[product_id] = {'quantity':0, 'price':str(product.price)}
-
-        else:
-            if update_quantity:
-                self.cart[product_id]['quantity'] = quantity
-            else:
-                self.cart[product_id]['quantity'] += quantity
-
-        self.save()
-
-    def save(self):
-        self.session['cart'] = self.cart
-        self.session.modified = True
-
-
+    objects = CartManager()
 
 
 
