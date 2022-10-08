@@ -1,8 +1,6 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login
-from .forms import LoginForm,RegisterForm,ContactForm
-from django.contrib import messages
+from .forms import ContactForm
+
 import datetime
 
 def home_page(request):
@@ -44,51 +42,6 @@ def contact_page(request):
         return redirect('home')
 
     return render(request,'contact/contact_form.html',context)
-
-
-
-
-
-def login_page(request):
-    form = LoginForm(request.POST or None)
-    context = {'form': form}
-
-    if form.is_valid():
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password')
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            print (username)
-            print ('login')
-            login(request,user)
-            context['form'] = LoginForm()
-            return redirect('/')
-        else:
-            messages.error(request,'username or password is not correct')
-
-    return render(request,'auth/login.html', context)
-
-def register_page(request):
-
-    form = RegisterForm(request.POST or None)
-    print (form.is_valid())
-    print (str(form.errors))
-
-    if form.is_valid():
-        print (form.cleaned_data)
-        username = form.cleaned_data.get('username')
-        print(username)
-        password = form.cleaned_data.get('password')
-        email = form.cleaned_data.get('email')
-        print(password,email)
-        new_user = User.objects.create_user(username=username, password=password, email=email)
-        new_user.save()
-        messages.success(request,"Registration successful")
-        return redirect('login')
-
-
-    context = {'form': form}
-    return render(request,'auth/register.html', context)
 
 
 

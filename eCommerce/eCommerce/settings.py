@@ -42,6 +42,10 @@ INSTALLED_APPS = [
     'tags.apps.TagsConfig',
     'search',
     'carts',
+    'orders',
+    'accounts',
+    'billing',
+    'addresses',
 
 ]
 
@@ -132,5 +136,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL ='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+LOGOUT_REDIRECT_URL = '/'
 
 

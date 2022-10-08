@@ -1,4 +1,5 @@
-
+{% extends 'base.html' %}
+{% block body %}
 <h3>Cart</h3>
 {% if products %}
 
@@ -20,7 +21,15 @@
         {% endfor %}
         <tr>
             <td colspan="2"></td>
+            <td><b>SubTotal</b>{{subtotal}}</td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
             <td><b>Total</b>{{total }}</td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+            <td><a href="{% url 'carts:checkout' %}"><button class="btn btn-large btn-success" type="submit" > Checkout</button></a></td>
         </tr>
 
     </tbody>
@@ -28,3 +37,5 @@
 {% else%}
 <p> Cart is empty</p>
 {% endif %}
+
+{% endblock %}
