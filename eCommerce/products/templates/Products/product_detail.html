@@ -1,12 +1,25 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<ul>
-    <li><h4>{{product.name}}</h4></li>
-    <li><a>Price: $ {{product.price}} </a></li>
-    <li><a>Description: {{product.description}}</a></li>
-    <hr>
-    <li><img src="{{product.image.url}}" class="img-fluid"></li>
-</ul>
+<div class="row">
+    <div class="col-10">
+        <ul>
+            <li><h4>{{product.name}}</h4></li>
+            <li><a>Price: $ {{product.price}} </a></li>
+            <li><a>Description: {{product.description}}</a></li>
+            <hr>
+            <li><img src="{{product.image.url}}" class="img-fluid"></li>
+        </ul>
+
+    </div>
+    <div class="col-2">
+
+        {{product.name}}
+        {% include 'products/update_cart.html' with product=product  cart_product_list=cart_product_list %}
+
+    </div>
+
+</div>
+
 
 {% endblock %}

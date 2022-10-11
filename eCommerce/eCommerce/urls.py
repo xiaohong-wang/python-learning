@@ -20,6 +20,7 @@ from . import views
 from django.conf import settings
 from accounts.views import login_page, register_page,logout_page, guest_register_page
 from addresses.views import checkout_address_create,checkout_address_reuse
+from carts.views import cart_detail_api_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,11 +31,15 @@ urlpatterns = [
     path('register/', register_page, name='register'),
     path('register/guest/', guest_register_page, name='guest_register'),
     path('logout/', logout_page, name='logout'),
+
     path('checkout/address/create/', checkout_address_create, name='checkout_address_create'),
     path('checkout/address/reuse/', checkout_address_reuse, name='checkout_address_reuse'),
+    path('api/cart/', cart_detail_api_view,name='api_cart'),
+
     path('products/', include('products.urls', namespace='products')),
     path('search/', include('search.urls', namespace='search')),
     path('carts/', include('carts.urls', namespace='carts')),
+
 ]
 if settings.DEBUG:
     urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

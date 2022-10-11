@@ -7,7 +7,14 @@ from billing.models import BillingProfile
 from accounts.models import GuestEmail
 from addresses.forms import AddressForm
 from addresses.models import Address
+from django.http import JsonResponse
 # Create your views here.
+
+
+
+def is_ajax(request):
+    print('called')
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 
 def cart_home(request):
@@ -29,6 +36,7 @@ def cart_home(request):
         print("Create New Cart, cart id is:", request.session['cart_id'])
 
     """
+
     cart_obj, created = Cart.objects.new_or_get(request)
     #print (request.session['cart_id'], cart_obj.id)
 
@@ -41,27 +49,60 @@ def cart_home(request):
 
     }
 
+
     return render(request,'carts/newcart.html',context)
 
 
+def cart_detail_api_view(reqeust):
+    cart_obj, created = Cart.objects.new_or_get(reqeust)
+    products = [{
+        'name':x.name,
+        'price':x.price,
+        'url':x.get_absolute_url(),
+        'id':x.id
+        }
+        for x in cart_obj.products.all()]
+    cart_data = {
+        'products':products,
+        'subtotal':cart_obj.subtotal,
+        'total':cart_obj.total
+
+    }
+
+
+    return JsonResponse(cart_data)
 
 
 def cart_update(request):
     product_id = request.POST.get('product_id')
     #print(product_id)
     cart_obj,created = Cart.objects.new_or_get(request)
+
     if product_id is not None:
         try:
             product_obj = Product.objects.get(pk=product_id)
         except Product.DoesNotExist:
-            print("Product is gone")
+
             return  redirect('carts:home')
         if product_obj not in cart_obj.products.all():
             cart_obj.products.add(product_obj)
+            added = True
         else:
             cart_obj.products.remove(product_obj)
+            added = False
 
         request.session['cart_item'] = cart_obj.products.count()
+
+        if is_ajax(request):
+          #  print('Ajax request')
+            json_data = {
+                'added': added,
+                'removed': not added,
+                'cartItemCount': cart_obj.products.count(),
+
+            }
+            return JsonResponse(json_data,status=200)
+
 
     return redirect('carts:home')
 
@@ -164,3 +205,7 @@ def order_checkout(request):
 
 def checkout_done(request):
     return render(request,'carts/checkout_done.html', {})
+
+
+
+

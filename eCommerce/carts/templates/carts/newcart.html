@@ -3,37 +3,47 @@
 <h3>Cart</h3>
 {% if products %}
 
-<table>
-    <thead>
-        <tr>
-            <td>#</td>
-            <td><strong>Product Name</strong></td>
-            <td><strong>Product Price</strong></td>
-        </tr>
-    </thead>
-    <tbody>
-        {% for product in products %}
-        <tr>
-            <th scope="row">{{forloop.counter}}</th>
-            <td>{{product.name}}</td>
-            <td>{{product.price}}</td>
-        </tr>
-        {% endfor %}
-        <tr>
-            <td colspan="2"></td>
-            <td><b>SubTotal</b>{{subtotal}}</td>
-        </tr>
-        <tr>
-            <td colspan="2"></td>
-            <td><b>Total</b>{{total }}</td>
-        </tr>
-        <tr>
-            <td colspan="2"></td>
-            <td><a href="{% url 'carts:checkout' %}"><button class="btn btn-large btn-success" type="submit" > Checkout</button></a></td>
-        </tr>
 
-    </tbody>
-</table>
+    <table class="table cart-table">
+        <thead>
+            <tr>
+                <td>#</td>
+                <td><strong>Product Name</strong></td>
+                <td><strong>Product Price</strong></td>
+            </tr>
+        </thead>
+        <tbody class="cart-body">
+
+            {% for product in products %}
+            <tr class="cart-products">
+                <th scope="row">{{forloop.counter}}</th>
+                <td><a href="{{product.get_absolute_url }}">{{product.name}}</a>
+                {% include 'carts/remove-product.html' with product_id=product.id   %}
+                </td>
+                <td>{{product.price}}</td>
+            </tr>
+            {% endfor %}
+
+            <tr>
+                <td colspan="2"></td>
+                <td><b>SubTotal</b><span class="cart-subtotal">{{subtotal}}</span></td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td><b>Total</b><span calss="cart-total">{{total}}</span></td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td><a href="{% url 'carts:checkout' %}"><button class="btn btn-large btn-success" type="submit" > Checkout</button></a></td>
+            </tr>
+
+        </tbody>
+    </table>
+    <div class="cart-item-remove-form" style="display:none">
+        {% include 'carts/remove-product.html' %}
+
+    </div>
+
 {% else%}
 <p> Cart is empty</p>
 {% endif %}

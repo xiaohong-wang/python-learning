@@ -11,6 +11,7 @@ def SearchProductView(request):
         product_list = Product.objects.search(query)
         print(product_list)
 
+
     context={
         'product_list':product_list,
         'query': query}

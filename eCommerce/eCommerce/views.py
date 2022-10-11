@@ -1,8 +1,10 @@
 from django.shortcuts import render,redirect
 from .forms import ContactForm
-
+from django.http import JsonResponse,HttpResponse
 import datetime
 
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 def home_page(request):
     context = {'title': "Home",
                'content': 'This is HomePage'}
@@ -38,8 +40,14 @@ def contact_page(request):
         "form": form,
     }
     if form.is_valid():
-        print (form.cleaned_data)
-        return redirect('home')
+        if is_ajax(request):
+            return JsonResponse({'message':'Thank you!'})
+
+    if form.errors:
+        errors = form.errors.as_json()
+        if is_ajax(request):
+            return HttpResponse(errors,status=400,content_type='application/json')
+
 
     return render(request,'contact/contact_form.html',context)
 
