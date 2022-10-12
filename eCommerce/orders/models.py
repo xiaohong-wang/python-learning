@@ -46,6 +46,7 @@ class Order(models.Model):
 
 
     objects = OrderManager()
+
     def __str__(self):
         return self.order_no
 

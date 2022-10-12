@@ -1,13 +1,15 @@
 from django.shortcuts import render,redirect
 from .forms import LoginForm,RegisterForm, GuestForm
 from django.contrib import messages
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate,login,logout
 # Create your views here.
 from .models import  GuestEmail
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.http import HttpResponseRedirect
+from .signals import user_login_signal
 
+User = get_user_model()
 
 def login_page(request):
     form = LoginForm(request.POST or None)
@@ -21,13 +23,14 @@ def login_page(request):
    # print(request.POST)
 
     if form.is_valid():
-        username = form.cleaned_data.get('username')
+        email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
-        user = authenticate(username=username, password=password)
+        user = authenticate(email=email, password=password)
 
         if user is not None:
 
             login(request,user)
+            user_login_signal.send(user.__class__, instance=user, request=request)
             context['form'] = LoginForm()
 
             try:
@@ -57,8 +60,8 @@ def logout_page(request):
 def register_page(request):
 
     form = RegisterForm(request.POST or None)
-
-
+    context = {'form': form}
+    """
     if form.is_valid():
 
         username = form.cleaned_data.get('username')
@@ -70,9 +73,12 @@ def register_page(request):
         new_user.save()
         messages.success(request,"Registration successful")
         return redirect('login')
+    """
+    if form.is_valid():
+        form.save()
+        return redirect('login')
 
 
-    context = {'form': form}
     return render(request,'accounts/register.html', context)
 
 

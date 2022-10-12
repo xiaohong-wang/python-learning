@@ -46,8 +46,11 @@ INSTALLED_APPS = [
     'accounts',
     'billing',
     'addresses',
+    'analytics',
 
 ]
+
+AUTH_USER_MODEL = 'accounts.User' #changes the built-in user model to ours
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

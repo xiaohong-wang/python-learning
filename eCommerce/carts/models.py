@@ -1,10 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
+from accounts.models import User
 from products.models import Product
 from django.conf import settings
 import datetime
 
 # Create your models here.
+User = settings.AUTH_USER_MODEL
 
 class CartManager(models.Manager):
     def new(self,user=None):

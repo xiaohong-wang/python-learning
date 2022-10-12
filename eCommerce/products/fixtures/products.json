@@ -1,0 +1,120 @@
+
+[
+{
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+        "name": "T shirt",
+        "price": "15.99",
+        "description": "Girls",
+        "slug": "t-shirt",
+        "featured": false,
+        "active": true,
+        "image": "products/81TfrfpryGL._AC_UY879_.jpg"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+        "name": "T shirt",
+        "price": "19.99",
+        "description": "Men",
+        "slug": "t-shirt-1",
+        "featured": false,
+        "active": true,
+        "image": "products/61Tr1uPq04L._AC_UX679_.jpg"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+        "name": "Hat",
+        "price": "23.50",
+        "description": "Black",
+        "slug": "hat",
+        "featured": false,
+        "active": true,
+        "image": "products/61WBFfETdrL._AC_UL640_FMwebp_QL65_.webp"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+        "name": "Hat",
+        "price": "12.99",
+        "description": "Blue",
+        "slug": "hat-1",
+        "featured": true,
+        "active": true,
+        "image": "products/91No-xh9TIL._AC_UX679_.jpg"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 5,
+    "fields": {
+        "name": "Pedal car",
+        "price": "999.00",
+        "description": "Outdoor Racer Pedal Car",
+        "slug": "pedal-car",
+        "featured": false,
+        "active": true,
+        "image": "products/41h02wI79iL._AC_SX679_.jpg"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 6,
+    "fields": {
+        "name": "Plaited sweater",
+        "price": "12.99",
+        "description": "Bring chunky texture to your casual look with this plaited-stitch sweater made from a soft and sustainable recycled-fiber blend.",
+        "slug": "plaited-sweater",
+        "featured": false,
+        "active": true,
+        "image": "products/a79cb3f0-2a58-48ae-96a5-dc90b36de864.webp"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 7,
+    "fields": {
+        "name": "Pocket Leggings",
+        "price": "24.99",
+        "description": "These soft and lustrous figure-hugging leggings help wick away sweat as you move throughout your workout. A higher waistline with a shaped back waistband gives these brushed, high-stretch leggings a flattering fit.",
+        "slug": "pocket-leggings",
+        "featured": false,
+        "active": true,
+        "image": "products/7676973f-ef51-4d3b-8847-fd5d2164e746.webp"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 8,
+    "fields": {
+        "name": "7/8 Legging",
+        "price": "39.90",
+        "description": "Work up a sweat in these incredibly lightweight leggings made from moisture-wicking fabric that keeps you cool at the studio and beyond.",
+        "slug": "78-legging",
+        "featured": false,
+        "active": true,
+        "image": "products/392e263d-1a07-49f7-a10b-228931accab5.webp"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 9,
+    "fields": {
+        "name": "legging",
+        "price": "54.95",
+        "description": "Soft and shapely, these high-waist leggings feature ribbing at the high waistband and ankle cuffs for comfy yet sporty vibes.",
+        "slug": "legging",
+        "featured": false,
+        "active": true,
+        "image": "products/18eebb3f-3b6d-4936-9e65-3c742c7db1c8.webp"
+    }
+}
+]
