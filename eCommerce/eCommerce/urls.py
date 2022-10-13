@@ -21,6 +21,7 @@ from django.conf import settings
 from accounts.views import login_page, register_page,logout_page, guest_register_page
 from addresses.views import checkout_address_create,checkout_address_reuse
 from carts.views import cart_detail_api_view
+from billing.views import payment_method_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -39,6 +40,8 @@ urlpatterns = [
     path('products/', include('products.urls', namespace='products')),
     path('search/', include('search.urls', namespace='search')),
     path('carts/', include('carts.urls', namespace='carts')),
+
+    path('billing/payment-method/', payment_method_view, name='payment_method'),
 
 ]
 if settings.DEBUG:
