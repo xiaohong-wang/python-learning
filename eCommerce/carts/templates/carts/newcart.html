@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block body %}
 <h3>Cart</h3>
-{% if products %}
+{% if items %}
 
 
     <table class="table cart-table">
@@ -10,27 +10,40 @@
                 <td>#</td>
                 <td><strong>Product Name</strong></td>
                 <td><strong>Product Price</strong></td>
+                <td><strong>Quantity</strong></td>
+                <td>        </td>
             </tr>
         </thead>
         <tbody class="cart-body">
 
-            {% for product in products %}
+            {% for item in items %}
             <tr class="cart-products">
                 <th scope="row">{{forloop.counter}}</th>
-                <td><a href="{{product.get_absolute_url }}">{{product.name}}</a>
-                {% include 'carts/remove-product.html' with product_id=product.id   %}
+                <td><a href="{{item.product.get_absolute_url }}">{{item.product.name}}</a>
                 </td>
-                <td>{{product.price}}</td>
+                <td>{{item.total_price}}
+                    <br>
+                    {% if item.quantity > 1 %} <p> <small>each:{{item.unite_price}}</small</p> {% endif %}
+                </td>
+                <td>{{item.quantity}}</td>
+
+                <td>
+                    <form method="post" action="{% url 'carts:item-delete'%}">
+                        {% csrf_token %}
+                         <input type="hidden" name="item_id" value={{item.id}}>
+                            <button class="btn btn-danger" type="submit">Delete</button></a>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
 
             <tr>
                 <td colspan="2"></td>
-                <td><b>SubTotal</b><span class="cart-subtotal">{{subtotal}}</span></td>
+                <td><b>SubTotal:  </b><span class="cart-subtotal">{{subtotal}}</span></td>
             </tr>
             <tr>
                 <td colspan="2"></td>
-                <td><b>Total</b><span calss="cart-total">{{total}}</span></td>
+                <td><b>Total:  </b><span calss="cart-total">{{total}}</span></td>
             </tr>
             <tr>
                 <td colspan="2"></td>
@@ -47,5 +60,8 @@
 {% else%}
 <p> Cart is empty</p>
 {% endif %}
+
+
+
 
 {% endblock %}

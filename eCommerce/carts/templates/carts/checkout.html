@@ -75,15 +75,30 @@
         </div>
 
         {% else %}
+            {% if not has_card %}
+                {% url 'payment_method' as payment_create_url %}
+                {% include 'billing/payment_form.html' with next_url=request.build_absolute_uri  action_url=payment_create_url %}
+            {% else %}
 
-            <h3>Finalize CheckOut</h3>
-            <p>Cart Total:  {{cart_obj.total}}</p>
-            <p>Shipping Total:  {{order_obj.shipping_total}}</p>
-            <p>Order Total:  {{order_obj.total}}</p>
-            <form method="POST" action="">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-success">CheckOut</button>
-            </form>
+            <div class="container">
+                <div class="col-10 col-md-5">
+                    <h3>Finalize CheckOut</h3>
+                    <p>Cart Items: {% for product in cart_obj.products.all %} {{ product.name }} , {% endfor %}</p>
+                    <p>Shipping Address: {{order_obj.shipping_address.get_address}}</p>
+                    <p>Billing Address: {{order_obj.billing_address.get_address}}</p>
+                    <p>Payment Method : {{ billing_obj.default_card}} <a href="{% url 'payment_method'%}?next={{request.build_absolute_uri}}">(change?)</a></p>
+                    <p>Cart Total:  {{cart_obj.total}}</p>
+                    <p>Shipping Total:  {{order_obj.shipping_total}}</p>
+                    <p>Order Total:  {{order_obj.total}}</p>
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success">CheckOut</button>
+                    </form>
+                </div>
+
+            </div>
+
+            {% endif %}
 
         {% endif %}
 

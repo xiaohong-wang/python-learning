@@ -3,13 +3,20 @@ from .forms import LoginForm,RegisterForm, GuestForm
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 from .models import  GuestEmail
 from django.utils.http import url_has_allowed_host_and_scheme
-from django.http import HttpResponseRedirect
+from django.conf import settings
 from .signals import user_login_signal
 
 User = get_user_model()
+
+
+@login_required
+def account_home(request):
+    return render(request,'accounts/home.html', {})
+
 
 def login_page(request):
     form = LoginForm(request.POST or None)

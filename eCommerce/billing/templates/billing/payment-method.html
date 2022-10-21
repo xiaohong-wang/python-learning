@@ -7,7 +7,7 @@
 
 <div class='col-9 col-md-4 mx-auto'>
     <h1>Add Payment Method</h1>
-<form  class="payment-form" action="/charge" method="post" id="payment-form" data-token='{{ publish_key }}'>
+<form  class="payment-form" action="/charge" method="post" id="payment-form" data-token='{{ publish_key }}' data-next-url="{% if next_url %} {{next_url}} {% endif %}">
   <div class="form-row">
     <!-- <label for="card-element">
       Credit or debit card
@@ -20,7 +20,7 @@
     <div id="card-errors" role="alert"></div>
   </div>
 
-  <button class='btn btn-primary my-3'>Submit Payment</button>
+  <button class='btn btn-primary my-3'>Add payment method</button>
 </form>
 </div>
 
@@ -40,6 +40,7 @@ if (paymentForm.length > 1){
 else if (paymentForm.length == 1 ) {
 
 var pubKey = paymentForm.attr('data-token')
+var nextUrl = paymentForm.attr('data-next-url')
 
 
     // Create a Stripe client
@@ -95,13 +96,56 @@ form.addEventListener('submit', function(event) {
       errorElement.textContent = result.error.message;
     } else {
       // Send the token to your server
-      stripeTokenHandler(result.token);
+      stripeTokenHandler(result.token,nextUrl);
     }
   });
 });
 
-function stripeTokenHandler(token){
-    console.log(token.id)
+function stripeTokenHandler(token,nextUrl ){
+    console.log(token.id,nextUrl)
+    var paymentMethodEndpoint = '/billing/payment-method/create/'
+
+
+    var data = {
+      'token':  token.id
+
+    }
+    $.ajax({
+      data: data,
+      url: paymentMethodEndpoint,
+      method: 'POST',
+
+      success: function(data){
+
+        console.log(data)
+        console.log(nextUrl)
+        if (nextUrl){
+          window.location.href = nextUrl
+        }
+
+        card.clear()
+        var successMsg = data.msg || "Success! You card is added. "
+        if ($.alert){
+          $.alert(successMsg)
+          console.log(nextUrl)
+
+          }
+        else{
+          alert(successMsg)
+        }
+        if (nextUrl){
+            setTimeout(function(){
+              console.log(nextUrl)
+              window.location.href = nextUrl }, 2000)
+
+       }
+      },
+      error: function(error){
+        console.log(error)
+       }
+
+    })
+
 }
 }
 

@@ -12,7 +12,7 @@ from django.db.models.signals import post_save
 User = settings.AUTH_USER_MODEL
 
 class ObjectView(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL,null=True)
+    user = models.ForeignKey(User,models.SET_NULL, null=True,blank=True)
     ip_address = models.CharField(max_length=220, blank=True, null=True)
     content_type = models.ForeignKey(ContentType,on_delete=models.SET_NULL,null=True)
     object_id = models.PositiveIntegerField()
@@ -30,28 +30,28 @@ class ObjectView(models.Model):
 
 
 def object_viewed_receiver(sender,instance,request,*args,**kwargs):
-    print("sender:",sender)
-    print('instance:',instance)
-    print('request',request)
+
     c_type = ContentType.objects.get_for_model(sender)
 
 
     new_view_obj = ObjectView.objects.create(
-            user = request.user,
-            ip_address = get_client_ip(request),
-            content_type = c_type,
-            object_id = instance.id,
+
+            ip_address=get_client_ip(request),
+            content_type=c_type,
+            object_id=instance.id,)
+
+    if str(request.user) !=  'AnonymousUser':
+        new_view_obj.user=request.user
+        new_view_obj.save()
 
 
 
-
-    )
 
 object_viewed_signal.connect(object_viewed_receiver)
 
 
 class UserSession(models.Model):
-    user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
+    user = models.ForeignKey(User,models.SET_NULL,null=True,blank=True)
     ip_address = models.CharField(max_length=250, blank=True, null=True)
     session_key = models.CharField(max_length=100, blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)

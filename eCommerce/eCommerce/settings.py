@@ -47,10 +47,24 @@ INSTALLED_APPS = [
     'billing',
     'addresses',
     'analytics',
+    'marketing'
 
 ]
 
 AUTH_USER_MODEL = 'accounts.User' #changes the built-in user model to ours
+
+
+MAILCHIMP_API_KEY = "18a98712f9d7d67605f4fac62c8e7dc4-us21"
+MAILCHIMP_DATA_CENTER = 'us21'
+MAILCHIMP_MAIL_LIST_ID = "6ff1d8c4e0"
+
+
+STRIPE_AIP_KEY  = "sk_test_51LsC9iHWNkoVm4NTLDuanbQX4zMqX9wxcIHOasNwEx4M8qhnuJbhAenlkLXyX1E6z51xAm20yjefqj67hwBL8ly700t6pVdyIX"
+STRIPE_PUB_KEY = 'pk_test_51LsC9iHWNkoVm4NTbk2qSTQcZxC3dTCX2lGaSuAnVeOceE04hAit7KwfD1aeI4AWpmFS3bx0n1xYduz8so3g4Elh00OfuA4D5f'
+
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL ='/login/'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -147,5 +161,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL ='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-LOGOUT_REDIRECT_URL = '/'
+
 

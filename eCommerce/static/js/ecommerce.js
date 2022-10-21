@@ -120,11 +120,9 @@
               success: function(data){
 
                 var submitSpan = thisForm.find('.submit-span')
-                if (data.added){
-                  submitSpan.html('In Cart <button class="btn btn-primary" type="submit"> Remove?</button>')
-                  }
-                else{
-                submitSpan.html('<button class="btn btn-success" type="submit">Add to cart</button>')
+                if (  data.added){
+
+                 submitSpan.html('<button class="btn btn-success" type="submit">Add to cart</button>')
                 }
 
                 var navbarCount = $(".Navbar-cart-count")
